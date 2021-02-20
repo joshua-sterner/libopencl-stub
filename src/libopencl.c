@@ -27,7 +27,8 @@ static const char *default_so_paths[] = {
   "/system/vendor/lib/egl/libGLES_mali.so",
   "/system/vendor/lib/libPVROCL.so",
   "/data/data/org.pocl.libs/files/lib/libpocl.so",
-  "libOpenCL.so"
+  "libOpenCL.so",
+  "/system/vendor/lib64/libOpenCL.so"
 };
 #elif defined(_WIN32)
 static const char *default_so_paths[] = {
@@ -342,6 +343,25 @@ clCreateCommandQueue(cl_context                     context,
     open_libopencl_so();
 
   func = (f_clCreateCommandQueue) dlsym(so_handle, "clCreateCommandQueue");
+  if(func) {
+    return func(context, device, properties, errcode_ret);
+  } else {
+    return NULL;
+  }
+}
+
+cl_command_queue
+clCreateCommandQueueWithProperties(cl_context                     context,
+                     cl_device_id                   device,
+                     const cl_queue_properties *    properties,
+                     cl_int *                       errcode_ret)
+{
+  f_clCreateCommandQueueWithProperties func;
+
+  if(!so_handle)
+    open_libopencl_so();
+
+  func = (f_clCreateCommandQueueWithProperties) dlsym(so_handle, "clCreateCommandQueueWithProperties");
   if(func) {
     return func(context, device, properties, errcode_ret);
   } else {
@@ -969,6 +989,23 @@ clSetKernelArg(cl_kernel    kernel,
   }
 }
 
+cl_int
+clSetKernelArgSVMPointer(cl_kernel    kernel,
+               cl_uint      arg_index,
+               const void * arg_value)
+{
+  f_clSetKernelArgSVMPointer func;
+
+  if(!so_handle)
+    open_libopencl_so();
+
+  func = (f_clSetKernelArgSVMPointer) dlsym(so_handle, "clSetKernelArgSVMPointer");
+  if(func) {
+    return func(kernel, arg_index, arg_value);
+  } else {
+    return CL_INVALID_PLATFORM;
+  }
+}
 cl_int
 clGetKernelInfo(cl_kernel       kernel,
                 cl_kernel_info  param_name,

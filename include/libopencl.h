@@ -1,7 +1,7 @@
 #ifndef LIBOPENCL_STUB_H
 #define LIBOPENCL_STUB_H
 
-#define CL_TARGET_OPENCL_VERSION 120
+#define CL_TARGET_OPENCL_VERSION 200
 #include <CL/cl.h>
 #include <CL/cl_gl.h>
 
@@ -36,6 +36,8 @@ typedef cl_int (*f_clReleaseContext) (cl_context);
 typedef cl_int (*f_clGetContextInfo) (cl_context, cl_context_info, size_t, void *, size_t *);
 
 typedef cl_command_queue (*f_clCreateCommandQueue) (cl_context, cl_device_id, cl_command_queue_properties, cl_int *);
+
+typedef cl_command_queue (*f_clCreateCommandQueueWithProperties) (cl_context, cl_device_id, const cl_queue_properties *, cl_int *);
 
 typedef cl_int (*f_clRetainCommandQueue) (cl_command_queue);
 
@@ -104,6 +106,8 @@ typedef cl_int (*f_clRetainKernel) (cl_kernel);
 typedef cl_int (*f_clReleaseKernel) (cl_kernel);
 
 typedef cl_int (*f_clSetKernelArg) (cl_kernel, cl_uint, size_t,const void *);
+
+typedef cl_int (*f_clSetKernelArgSVMPointer) (cl_kernel, cl_uint, const void *);
 
 typedef cl_int (*f_clGetKernelInfo) (cl_kernel, cl_kernel_info, size_t, void *, size_t *);
 
