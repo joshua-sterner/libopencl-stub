@@ -22,13 +22,17 @@ static const char *default_so_paths[] = {
 };
 #elif defined(__ANDROID__)
 static const char *default_so_paths[] = {
+  "/system/lib64/libOpenCL.so",
+  "/system/vendor/lib64/libOpenCL.so",
+  "/system/vendor/lib64/egl/libGLES_mali.so",
+  "/system/vendor/lib64/libPVROCL.so",
+  "/data/data/org.pocl.libs/files/lib64/libpocl.so",
   "/system/lib/libOpenCL.so",
   "/system/vendor/lib/libOpenCL.so",
   "/system/vendor/lib/egl/libGLES_mali.so",
   "/system/vendor/lib/libPVROCL.so",
   "/data/data/org.pocl.libs/files/lib/libpocl.so",
-  "libOpenCL.so",
-  "/system/vendor/lib64/libOpenCL.so"
+  "libOpenCL.so"
 };
 #elif defined(_WIN32)
 static const char *default_so_paths[] = {
@@ -350,11 +354,12 @@ clCreateCommandQueue(cl_context                     context,
   }
 }
 
+#ifdef CL_VERSION_2_0
 cl_command_queue
 clCreateCommandQueueWithProperties(cl_context                     context,
-                     cl_device_id                   device,
-                     const cl_queue_properties *    properties,
-                     cl_int *                       errcode_ret)
+                                   cl_device_id                   device,
+                     	             const cl_queue_properties *    properties,
+                                   cl_int *                       errcode_ret)
 {
   f_clCreateCommandQueueWithProperties func;
 
@@ -368,6 +373,7 @@ clCreateCommandQueueWithProperties(cl_context                     context,
     return NULL;
   }
 }
+#endif
 
 cl_int
 clRetainCommandQueue(cl_command_queue command_queue)
@@ -989,6 +995,7 @@ clSetKernelArg(cl_kernel    kernel,
   }
 }
 
+#ifdef CL_VERSION_2_0
 cl_int
 clSetKernelArgSVMPointer(cl_kernel    kernel,
                cl_uint      arg_index,
@@ -1006,6 +1013,8 @@ clSetKernelArgSVMPointer(cl_kernel    kernel,
     return CL_INVALID_PLATFORM;
   }
 }
+#endif
+
 cl_int
 clGetKernelInfo(cl_kernel       kernel,
                 cl_kernel_info  param_name,
