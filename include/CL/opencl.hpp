@@ -1326,6 +1326,10 @@ inline cl_int getInfoHelper(Func f, cl_uint name, T* param, int, typename T::cl_
     F(cl_device_info, CL_DEVICE_PREFERRED_INTEROP_USER_SYNC, size_type) \
     F(cl_device_info, CL_DEVICE_PARTITION_AFFINITY_DOMAIN, cl_device_affinity_domain) \
     F(cl_device_info, CL_DEVICE_BUILT_IN_KERNELS, string) \
+    F(cl_device_info, CL_DEVICE_IMAGE_MAX_BUFFER_SIZE, cl_uint) \
+    F(cl_device_info, CL_DEVICE_IMAGE_MAX_ARRAY_SIZE, cl_uint) \
+    F(cl_device_info, CL_DEVICE_LINKER_AVAILABLE, cl_uint) \
+    F(cl_device_info, CL_DEVICE_PRINTF_BUFFER_SIZE, cl_uint) \
     \
     F(cl_image_info, CL_IMAGE_ARRAY_SIZE, size_type) \
     F(cl_image_info, CL_IMAGE_NUM_MIP_LEVELS, cl_uint) \
