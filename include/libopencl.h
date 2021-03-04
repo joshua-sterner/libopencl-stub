@@ -235,8 +235,23 @@ typedef cl_mem (*f_clCreateFromGLTexture3D) (cl_context, cl_mem_flags, cl_GLenum
 typedef cl_int (*f_clGetGLContextInfoKHR) (const cl_context_properties *, cl_gl_context_info, size_t,
                                         void *, size_t *);
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // Additional api to reset currently opened opencl shared-object
 // Subsequent calls will use newly set environment variables
-void stubOpenclReset();
+extern void stubOpenclReset();
+
+/**
+ * Loads the OpenCL library if it is not already loaded.
+ *
+ * @return 1 on success or if the library is already loaded, 0 on failure.
+ */
+extern int loadOpenCL();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif    // LIBOPENCL_STUB_H

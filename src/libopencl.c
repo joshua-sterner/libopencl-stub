@@ -99,6 +99,13 @@ static int open_libopencl_so()
   }
 }
 
+int loadOpenCL() {
+    if(so_handle) {
+        return 1;
+    }
+    return open_libopencl_so() == 0 ? 1 : 0;
+}
+
 void stubOpenclReset()
 {
   if(so_handle)
